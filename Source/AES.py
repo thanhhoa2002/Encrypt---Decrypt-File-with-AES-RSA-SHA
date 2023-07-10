@@ -1,6 +1,5 @@
 import random
 import string
-import binascii
 ## s box
 aes_sbox = [
     [int('63', 16), int('7c', 16), int('77', 16), int('7b', 16), int('f2', 16), int('6b', 16), int('6f', 16), int('c5', 16), int(
@@ -165,7 +164,7 @@ def mix_column(column):
     ]
     return r
 ##
-## add sub key / add round key
+## add sub key
 def add_sub_key(block_grid, key_grid):
     r = []
 
@@ -182,18 +181,18 @@ def extract_key_for_round(expanded_key, round):
 ##
 def enc(key, data):
 
-    # First we need to padd the data with \x00 and break it into blocks of 16
+    # Padd the data with \x00 and break it into blocks of 16
     pad = bytes(16 - len(data) % 16)
     
     if len(pad) != 16:
         data += pad
     grids = break_in_grids_of_16(data)
 
-    # Now we need to expand the key for the multiple rounds
+    # Expand the key for the multiple rounds
     expanded_key = expand_key(key, 11)
 
     # And apply the original key to the blocks before start the rounds
-    # For now on we will work with integers
+    # Work with integers from now
     temp_grids = []
     round_key = extract_key_for_round(expanded_key, 0)
 
@@ -202,7 +201,8 @@ def enc(key, data):
 
     grids = temp_grids
 
-    # Now we can move to the main part of the algorithm
+    # encrypt flow 
+    #
     for round in range(1, 10):
         temp_grids = []
         
@@ -246,7 +246,7 @@ def dec(key, data):
     temp_grids = []
     round_key = extract_key_for_round(expanded_key, 10)
 
-    # First we undo the final round
+    # First undo the final round
     temp_grids = []
 
     for grid in grids:
@@ -300,21 +300,7 @@ def dec(key, data):
 def string_to_bytes(string):
     bytes_string = string.encode('utf-8')  # Chuyển đổi chuỗi thành byte string với mã hóa UTF-8
     return bytes_string
-##
-# key = 'phongVN123456789'  # 16-byte key
-# plaintext = 'PhongVN12345678'  # Plaintext message
-# byte_key = string_to_bytes(key)
-# byte_plaintext = string_to_bytes(plaintext)
 
-# print("Plaintext:", byte_plaintext.decode())
-# # Encryption
-# ciphertext = enc(byte_key, byte_plaintext)
-# print("Ciphertext:", binascii.hexlify(ciphertext).decode('utf-8'))
-
-# # Decryption
-# decrypted_text = dec(byte_key, ciphertext)
-# print("Decrypted Text:", decrypted_text.decode())
-##
 def generate_random_string(length):
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for _ in range(length))

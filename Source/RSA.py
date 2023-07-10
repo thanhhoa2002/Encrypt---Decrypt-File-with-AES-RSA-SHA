@@ -1,22 +1,16 @@
 import random
 import math
 
-# kiểm tra số nguyên tố
-def is_prime(n):
+def is_prime(n, k=10000):
     if n <= 1:
         return False
-
-    if n <= 3:
+    if n == 2 or n == 3:
         return True
 
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-
-    sqrt_n = int(math.sqrt(n))
-    for i in range(5, sqrt_n + 1, 6):
-        if n % i == 0 or n % (i + 2) == 0:
+    for _ in range(k):
+        a = random.randint(2, n - 2)
+        if pow(a, n - 1, n) != 1:
             return False
-
     return True
 
 def gen_big_number(min_bit_length, max_bit_length):
@@ -29,9 +23,9 @@ def gen_big_number(min_bit_length, max_bit_length):
 
 # sinh số nguyên tố ngẫu nhiên
 def gen_prime_number():
-    prime = gen_big_number(58, 64)
+    prime = gen_big_number(128, 256)
     while not is_prime(prime):
-        prime = gen_big_number(58, 64)
+        prime = gen_big_number(128, 256)
     return prime
 
 # sinh số nguyên tố cùng nguyên tố với phi_n
@@ -75,12 +69,12 @@ def gen_rsa_keypair():
     return Kprivate, Kpublic
 
 def rsa_encrypt_string(message, e, n):
-    plaintext = [ord(char) for char in message]  # Chuyển đổi chuỗi thành danh sách các giá trị mã ASCII
-    ciphertext = [str(pow(char, e, n)) for char in plaintext]  # Mã hoá từng giá trị mã ASCII
-    return ' '.join(ciphertext)  # Kết hợp các giá trị mã hoá thành một chuỗi
+    plaintext = [ord(char) for char in message]
+    ciphertext = [str(pow(char, e, n)) for char in plaintext]
+    return ' '.join(ciphertext)
 
 def rsa_decrypt_string(ciphertext, d, n):
-    encrypted_values = ciphertext.split(' ')  # Tách chuỗi mã hoá thành danh sách các giá trị mã hoá
-    decrypted_values = [pow(int(char), d, n) for char in encrypted_values]  # Giải mã từng giá trị mã hoá
-    plaintext = ''.join([chr(decrypted_char) for decrypted_char in decrypted_values])  # Chuyển đổi thành chuỗi gốc
+    encrypted_values = ciphertext.split(' ') 
+    decrypted_values = [pow(int(char), d, n) for char in encrypted_values]
+    plaintext = ''.join([chr(decrypted_char) for decrypted_char in decrypted_values])
     return plaintext

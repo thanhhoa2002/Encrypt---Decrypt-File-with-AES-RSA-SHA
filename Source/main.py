@@ -69,7 +69,7 @@ def write_file_C():
             encrypt_display_lable3_1.config(text="Khoá Private:")
             encrypt_display_lable3_2.config(text=Kprivate[0])
             encrypt_display_lable3_3.config(text=Kprivate[1])
-            encrypt_button4.grid(row=3, column=2, pady=20, padx=10)
+            encrypt_button4.grid(row=4, column=0, padx=10)
             showinfo(title="Tạo key RSA", message="Tạo key RSA thành công")
         
         # Tạo và khởi chạy một luồng riêng biệt
@@ -161,6 +161,7 @@ def main_to_encrypt():
     encrypt_display_lable2.config(text="Lưu file đã mã hoá")
     encrypt_display_lable3_1.config(text="")
     encrypt_display_lable3_2.config(text="")
+    encrypt_display_lable3_3.config(text="")
     encrypt_display_lable2.grid_forget()
     encrypt_button3.grid_forget()
     encrypt_button4.grid_forget()
@@ -250,10 +251,10 @@ encrypt_button3 = tk.Button(encrypt_frame, text="File...", font=("Arial", 15), f
 
 encrypt_display_lable3_1 = tk.Label(encrypt_frame, text="", font=("Arial", 15), fg="green")
 encrypt_display_lable3_1.grid(row=3, column=0, pady=20, padx=10)
-encrypt_display_lable3_2 = tk.Label(encrypt_frame, text="", font=("Arial", 15), fg="red", anchor="w")
-encrypt_display_lable3_2.grid(row=3, column=1, pady=0, padx=0)
-encrypt_display_lable3_3 = tk.Label(encrypt_frame, text="", font=("Arial", 15), fg="black", anchor="w")
-encrypt_display_lable3_3.grid(row=4, column=1, pady=0, padx=0)
+encrypt_display_lable3_2 = tk.Label(encrypt_frame, text="", font=("Arial", 15), fg="red", anchor="w", wraplength=500)
+encrypt_display_lable3_2.grid(row=3, column=1, columnspan=2 , pady=0, padx=0)
+encrypt_display_lable3_3 = tk.Label(encrypt_frame, text="", font=("Arial", 15), fg="black", anchor="w", wraplength=500)
+encrypt_display_lable3_3.grid(row=4, column=1, columnspan=2, pady=0, padx=0)
 encrypt_button4 = tk.Button(encrypt_frame, text="Lưu khoá", font=("Arial", 15), fg="black", command=write_Kprivate)
 
 
